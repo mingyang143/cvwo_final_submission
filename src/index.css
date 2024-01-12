@@ -60,6 +60,14 @@ h3 {
   color: #333;
 }
 
+.link {
+  text-decoration: none;
+  color: #535a5a;
+}
+.link:hover {
+  color: #1f2727;
+}
+
 /*BUTTON*/
 
 button {

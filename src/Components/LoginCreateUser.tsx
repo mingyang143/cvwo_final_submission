@@ -62,7 +62,9 @@ export default function Login({
 
         {type === "login" && (
           <div>
-            <Link to="/create">No account? Create one now!</Link>
+            <Link to="/create" className="link">
+              No account? Create one now!
+            </Link>
           </div>
         )}
         <div>
