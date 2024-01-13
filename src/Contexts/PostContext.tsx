@@ -14,97 +14,15 @@ import {
   PostToBeEdited,
   NewPost,
   PostContextType,
+  Post,
 } from "../Models/PostModels";
-
-// export type Post = {
-//   comments: Array<Comment>;
-//   content: string;
-//   id: number;
-//   likes: number;
-//   title: string;
-//   userId: number;
-// };
-
-// export type Comment = {
-//   id: number | string;
-//   comment: string;
-//   discussionId: number;
-// };
-
-// type ChildrenProps = {
-//   children: React.ReactNode;
-// };
-
-// type State = {
-//   posts: Array<Post>;
-//   isPostFormOpen: true | false;
-//   isLoading: true | false;
-//   error: string;
-// };
-
-// type Action =
-//   | {
-//       type: "posts/fetched";
-//       payload: Array<Post>;
-//     }
-//   | {
-//       type: "posts/formToggle";
-//     }
-//   | {
-//       type: "posts/addPost";
-//       payload: Post;
-//     }
-//   | {
-//       type: "posts/likes";
-//       payload: number;
-//     }
-//   | {
-//       type: "posts/edit";
-//       payload: PostToBeEdited;
-//     }
-//   | { type: "posts/loadingToggle" }
-//   | {
-//       type: "posts/errorFetch";
-//       payload: string;
-//     }
-//   | {
-//       type: "posts/comment";
-//       payload: Comment;
-//     }
-//   | { type: "posts/delete"; payload: number };
-
-// type PostToBeEdited = {
-//   id: number;
-//   title: string;
-//   content: string;
-// };
-
-// type NewPost = {
-//   userId: number | undefined;
-//   title: string;
-//   content: string;
-//   likes: number;
-//   comments: [];
-// };
-
-// type PostContextType = State & {
-//   posts: Array<Post>;
-//   isPostFormOpen: true | false;
-//   isLoading: true | false;
-//   error: string;
-//   postEdit: (postToBeEdited: PostToBeEdited) => void;
-//   postCreate: (newPost: NewPost) => void;
-//   postComment: (newComment: Comment) => void;
-//   postLike: (id: number) => void;
-//   postDelete: (id: number) => void;
-//   dispatch: React.Dispatch<Action>;
-// };
 
 const initialState = {
   posts: [],
   isPostFormOpen: false,
   isLoading: false,
   error: "",
+  tagsAll: [],
 };
 
 const PostContext = createContext<PostContextType>({
@@ -115,12 +33,25 @@ const PostContext = createContext<PostContextType>({
   postLike: () => {},
   postDelete: () => {},
   dispatch: () => {},
+  postFormToggle: () => {},
 });
 
 function reducer(state: State, action: Action): State {
+  //compute all tags
+
+  function getTagsAll(posts: Array<Post>) {
+    return posts.reduce(
+      (acc: Array<string>, currPost) => acc.concat(currPost?.tags),
+      []
+    );
+  }
   switch (action.type) {
     case "posts/fetched":
-      return { ...state, posts: action.payload };
+      return {
+        ...state,
+        posts: action.payload,
+        tagsAll: getTagsAll(action.payload),
+      };
     case "posts/formToggle":
       return { ...state, isPostFormOpen: !state.isPostFormOpen };
     case "posts/addPost":
@@ -128,6 +59,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         posts: [...state.posts, action.payload],
         isPostFormOpen: false,
+        tagsAll: [...state.tagsAll, ...action.payload.tags],
       };
     case "posts/likes":
       return {
@@ -183,8 +115,9 @@ function reducer(state: State, action: Action): State {
 
 function PostProvider({ children }: ChildrenProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { posts, isPostFormOpen, isLoading, error } = state;
+  const { posts, isPostFormOpen, isLoading, error, tagsAll } = state;
   const { user } = useAuth();
+
   //error handling
   function getErrorMessage(error: unknown) {
     if (error instanceof Error) return error.message;
@@ -205,6 +138,7 @@ function PostProvider({ children }: ChildrenProps) {
           );
         const data = await res.json();
         const initialState = data.payload.data;
+
         dispatch({ type: "posts/fetched", payload: initialState });
       } catch (err) {
         reportError({ message: getErrorMessage(err) });
@@ -215,7 +149,9 @@ function PostProvider({ children }: ChildrenProps) {
 
     fetchDiscussions();
   }, []);
-
+  const postFormToggle = useCallback(function postFormToggle() {
+    dispatch({ type: "posts/formToggle" });
+  }, []);
   const dbPostCreate = useCallback(async function dbPostCreate(
     newPost: NewPost
   ) {
@@ -385,12 +321,14 @@ function PostProvider({ children }: ChildrenProps) {
       isPostFormOpen,
       isLoading,
       error,
+      tagsAll,
       postEdit,
       postCreate,
       postComment,
       postLike,
       postDelete,
       dispatch,
+      postFormToggle,
     };
   }, [
     posts,
@@ -402,6 +340,8 @@ function PostProvider({ children }: ChildrenProps) {
     postComment,
     postLike,
     postDelete,
+    postFormToggle,
+    tagsAll,
   ]);
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }

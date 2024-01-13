@@ -35,7 +35,12 @@ export default function FormMakeComment({
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         ></input>
-        <Button className="" onClick={() => {}}>
+        <Button
+          className=""
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
+            e;
+          }}
+        >
           Add comment
         </Button>
       </form>

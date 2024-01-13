@@ -1,6 +1,6 @@
 type ChildrenProps = {
   children: React.ReactNode;
-  onClick: () => unknown;
+  onClick: (e: React.MouseEvent<HTMLElement>) => unknown;
   className: string;
 };
 export default function Button({

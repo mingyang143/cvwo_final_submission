@@ -18,13 +18,13 @@ export default function Login({
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  //const [password, setPassword] = useState("");
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (username && password) {
+    if (username) {
       onSubmit(username);
       setUsername("");
-      setPassword("");
+      //setPassword("");
     }
   }
 
@@ -50,7 +50,7 @@ export default function Login({
           />
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -58,7 +58,7 @@ export default function Login({
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-        </div>
+        </div> */}
 
         {type === "login" && (
           <div>

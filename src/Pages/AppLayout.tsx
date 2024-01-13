@@ -3,17 +3,20 @@ import FormMakePost from "../Components/FormMakePost";
 import Button from "../Components/Button";
 import { usePosts } from "../Contexts/Hooks/postContextHook";
 import Spinner from "../Components/Spinner";
+import TagSelection from "../Components/TagSelection";
+import { useState } from "react";
 
-function App() {
+function AppLayout() {
   const { isPostFormOpen, dispatch, isLoading } = usePosts();
-
+  const [currTag, setCurrTag] = useState("All Posts");
   if (isLoading) {
     return <Spinner />;
   }
 
   return (
     <section>
-      <PostList />
+      <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
+      <PostList currTag={currTag} />
       {isPostFormOpen && <FormMakePost />}
       {!isPostFormOpen && (
         <Button
@@ -27,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppLayout;

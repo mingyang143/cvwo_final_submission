@@ -2,23 +2,24 @@ import { useState } from "react";
 import Button from "./Button";
 import { usePosts } from "../Contexts/Hooks/postContextHook";
 import { useAuth } from "../Contexts/Hooks/authContextHook";
+import { NewPost } from "../Models/PostModels";
+import BackButton from "./BackButton";
 
-type NewPost = {
-  userId: number | undefined;
-  title: string;
-  content: string;
-  likes: number;
-  comments: [];
-};
 export default function FormMakePost() {
   const { postCreate } = usePosts();
   const [postTitle, setpostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
+  const [tag, setTag] = useState("");
+  const [existingTag, setExistingTag] = useState("");
   const { user } = useAuth();
+  const { tagsAll } = usePosts();
+
+  const toFindDuplicates = (arry: Array<string>) =>
+    arry.filter((item: string, index: number) => arry.indexOf(item) === index);
   // const id = crypto.randomUUID();
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!postTitle || !postContent) return;
+    if (!postTitle || !postContent || (!tag && !existingTag)) return;
     const newPost: NewPost = {
       // id: 1,
       userId: user?.userId,
@@ -26,6 +27,7 @@ export default function FormMakePost() {
       content: postContent,
       likes: 0,
       comments: [],
+      tags: tag === "" ? [existingTag] : toFindDuplicates(tag.split(",")),
     };
 
     postCreate(newPost);
@@ -45,7 +47,34 @@ export default function FormMakePost() {
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}
       ></input>
-      <Button className="" onClick={() => {}}>
+      <label>
+        Create and use new tags (If there are multiple tags, separate them using
+        a comma)
+      </label>
+      <input
+        type="text"
+        value={tag}
+        onChange={(e) => setTag(e.target.value)}
+        disabled={existingTag !== ""}
+      ></input>
+      <label>Or use an existing tag</label>
+      <select
+        value={existingTag}
+        onChange={(e) => setExistingTag(e.target.value)}
+        disabled={tag !== ""}
+      >
+        <option value=""></option>
+        {tagsAll.map((tag) => (
+          <option>{tag}</option>
+        ))}
+      </select>
+      <BackButton />
+      <Button
+        className=""
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          e;
+        }}
+      >
         Start Discussion! 💬
       </Button>
     </form>

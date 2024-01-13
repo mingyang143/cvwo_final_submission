@@ -5,6 +5,7 @@ export type Post = {
   likes: number;
   title: string;
   userId: number;
+  tags: Array<string>;
 };
 
 export type Comment = {
@@ -22,6 +23,7 @@ export type State = {
   isPostFormOpen: true | false;
   isLoading: true | false;
   error: string;
+  tagsAll: string[];
 };
 
 export type Action =
@@ -67,6 +69,7 @@ export type NewPost = {
   content: string;
   likes: number;
   comments: [];
+  tags: Array<string>;
 };
 
 export type PostContextType = State & {
@@ -80,4 +83,6 @@ export type PostContextType = State & {
   postLike: (id: number) => void;
   postDelete: (id: number) => void;
   dispatch: React.Dispatch<Action>;
+  postFormToggle: () => void;
+  //getTags: () => string[];
 };

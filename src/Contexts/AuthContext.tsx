@@ -75,13 +75,13 @@ function AuthProvider({ children }: ChildrenProps) {
   async function login(username: string) {
     dispatch({ type: "toggleLoading" });
     const data = await dbIsValidUser({ name: username });
-
     dispatch({ type: "toggleLoading" });
     if (data?.errorCode === 0) {
       dispatch({
         type: "login",
         payload: { name: username, userId: data.payload.data.id },
       });
+
       alert("Successfully logged in!");
     } else {
       alert("No user found, please create a user! ❌");

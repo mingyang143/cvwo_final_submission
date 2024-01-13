@@ -138,7 +138,7 @@ button {
       rgba(36, 42, 46, 0.8),
       rgba(36, 42, 46, 0.8)
     ),
-    url("../bg.jpg");
+    url("../public/bg.jpg");
   background-size: cover;
   background-position: center;
   padding: 2.5rem 5rem;
@@ -231,6 +231,10 @@ textarea {
   transition: all 0.2s;
 }
 
+input:disabled {
+  pointer-events: none;
+  background-color: #dae6e6;
+}
 input:focus {
   outline: none;
   background-color: #fff;
