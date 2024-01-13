@@ -35,16 +35,23 @@ const PostContext = createContext<PostContextType>({
   dispatch: () => {},
   postFormToggle: () => {},
 });
-
+function toFindDuplicates(arr: Array<string>) {
+  return arr.filter(
+    (item: string, index: number) => arr.indexOf(item) === index
+  );
+}
 function reducer(state: State, action: Action): State {
   //compute all tags
 
   function getTagsAll(posts: Array<Post>) {
-    return posts.reduce(
-      (acc: Array<string>, currPost) => acc.concat(currPost?.tags),
-      []
+    return toFindDuplicates(
+      posts.reduce(
+        (acc: Array<string>, currPost) => acc.concat(currPost?.tags),
+        []
+      )
     );
   }
+
   switch (action.type) {
     case "posts/fetched":
       return {
@@ -59,7 +66,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         posts: [...state.posts, action.payload],
         isPostFormOpen: false,
-        tagsAll: [...state.tagsAll, ...action.payload.tags],
+        tagsAll: toFindDuplicates([...state.tagsAll, ...action.payload.tags]),
       };
     case "posts/likes":
       return {
@@ -156,10 +163,14 @@ function PostProvider({ children }: ChildrenProps) {
     newPost: NewPost
   ) {
     dispatch({ type: "posts/loadingToggle" });
+    const newPostNoDuplicateTag = {
+      ...newPost,
+      tags: toFindDuplicates(newPost.tags),
+    };
     try {
       const res = await fetch(`/discussion`, {
         method: "put",
-        body: JSON.stringify(newPost),
+        body: JSON.stringify(newPostNoDuplicateTag),
         headers: {
           "Content-Type": "application/json",
         },

@@ -9,13 +9,16 @@ import { useState } from "react";
 function AppLayout() {
   const { isPostFormOpen, dispatch, isLoading } = usePosts();
   const [currTag, setCurrTag] = useState("All Posts");
+  const { tagsAll } = usePosts();
   if (isLoading) {
     return <Spinner />;
   }
 
   return (
     <section>
-      <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
+      {tagsAll.length !== 0 && (
+        <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
+      )}
       <PostList currTag={currTag} />
       {isPostFormOpen && <FormMakePost />}
       {!isPostFormOpen && (

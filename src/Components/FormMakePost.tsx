@@ -14,8 +14,6 @@ export default function FormMakePost() {
   const { user } = useAuth();
   const { tagsAll } = usePosts();
 
-  const toFindDuplicates = (arry: Array<string>) =>
-    arry.filter((item: string, index: number) => arry.indexOf(item) === index);
   // const id = crypto.randomUUID();
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -27,7 +25,7 @@ export default function FormMakePost() {
       content: postContent,
       likes: 0,
       comments: [],
-      tags: tag === "" ? [existingTag] : toFindDuplicates(tag.split(",")),
+      tags: tag === "" ? [existingTag] : tag.split(","),
     };
 
     postCreate(newPost);
@@ -57,17 +55,23 @@ export default function FormMakePost() {
         onChange={(e) => setTag(e.target.value)}
         disabled={existingTag !== ""}
       ></input>
-      <label>Or use an existing tag</label>
-      <select
-        value={existingTag}
-        onChange={(e) => setExistingTag(e.target.value)}
-        disabled={tag !== ""}
-      >
-        <option value=""></option>
-        {tagsAll.map((tag) => (
-          <option>{tag}</option>
-        ))}
-      </select>
+
+      {tagsAll.length !== 0 && (
+        <>
+          <label>Or use an existing tag</label>
+          <select
+            value={existingTag}
+            onChange={(e) => setExistingTag(e.target.value)}
+            disabled={tag !== ""}
+          >
+            <option value=""></option>
+            {tagsAll.map((tag) => (
+              <option>{tag}</option>
+            ))}
+          </select>
+        </>
+      )}
+
       <BackButton />
       <Button
         className=""
