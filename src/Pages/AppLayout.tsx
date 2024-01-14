@@ -5,31 +5,35 @@ import { usePosts } from "../Contexts/Hooks/postContextHook";
 import Spinner from "../Components/Spinner";
 import TagSelection from "../Components/TagSelection";
 import { useState } from "react";
+import Search from "../Components/Search";
 
 function AppLayout() {
-  const { isPostFormOpen, dispatch, isLoading } = usePosts();
+  const { isPostFormOpen, dispatch, isLoading, tagsAll } = usePosts();
   const [currTag, setCurrTag] = useState("All Posts");
-  const { tagsAll } = usePosts();
+  const [query, setQuery] = useState("");
   if (isLoading) {
     return <Spinner />;
   }
 
   return (
-    <section>
-      {tagsAll.length !== 0 && (
-        <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
-      )}
-      <PostList currTag={currTag} />
-      {isPostFormOpen && <FormMakePost />}
-      {!isPostFormOpen && (
-        <Button
-          className=""
-          onClick={() => dispatch({ type: "posts/formToggle" })}
-        >
-          Create Post 🗣️
-        </Button>
-      )}
-    </section>
+    <>
+      <section>
+        <Search query={query} setQuery={setQuery} />
+        {tagsAll.length !== 0 && (
+          <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
+        )}
+        <PostList currTag={currTag} query={query} />
+        {isPostFormOpen && <FormMakePost />}
+        {!isPostFormOpen && (
+          <Button
+            className=""
+            onClick={() => dispatch({ type: "posts/formToggle" })}
+          >
+            Create Post 🗣️
+          </Button>
+        )}
+      </section>
+    </>
   );
 }
 

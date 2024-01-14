@@ -1,6 +1,12 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+left over things to do:
+
+2. css modules
+3. jwt authentication
+4. deploy frontend to netlify and backend to render
+   This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+5. render error when user already exists
 
 Currently, two official plugins are available:
 
