@@ -11,7 +11,7 @@ export default function TextExpander({
 }: {
   children: string;
   expanded?: true | false;
-  className: string;
+  className?: string;
   collapsedNumWords?: number;
   expandButtonText?: string;
   collapseButtonText?: string;
@@ -23,7 +23,6 @@ export default function TextExpander({
   function handleExpand() {
     setExpand((e) => !e);
   }
-
   const buttonStyle = {
     background: "none",
     border: "none",

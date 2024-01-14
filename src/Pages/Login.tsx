@@ -8,12 +8,14 @@ function Login() {
     return <Spinner />;
   }
   return (
-    <LoginCreateUser
-      message={"Login now!"}
-      onSubmit={login}
-      type={"login"}
-      ctaButton={"Login"}
-    />
+    <section>
+      <LoginCreateUser
+        message={"Login now!"}
+        onSubmit={login}
+        type={"login"}
+        ctaButton={"Login"}
+      />
+    </section>
   );
 }
 

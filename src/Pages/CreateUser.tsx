@@ -8,12 +8,14 @@ function CreateUser() {
     return <Spinner />;
   }
   return (
-    <LoginCreateUser
-      message={"Create a new user now! 🥳"}
-      onSubmit={createUser}
-      type={"create"}
-      ctaButton={"Create User!"}
-    />
+    <section>
+      <LoginCreateUser
+        message={"Create a new user now! 🥳"}
+        onSubmit={createUser}
+        type={"create"}
+        ctaButton={"Create User!"}
+      />
+    </section>
   );
 }
 

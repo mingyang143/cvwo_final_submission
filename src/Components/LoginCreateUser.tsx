@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../Contexts/Hooks/authContextHook";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
+import styles from "./LoginCreateUser.module.css";
 
 export default function Login({
   message,
@@ -37,10 +38,10 @@ export default function Login({
     [isAuthenticated, navigate]
   );
   return (
-    <main className="login">
+    <main className={styles.login}>
       <h1>{message}</h1>
-      <form className="form" onSubmit={(e) => handleSubmit(e)}>
-        <div className="row">
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+        <div className={styles.row}>
           <label htmlFor="username">username</label>
           <input
             type="username"

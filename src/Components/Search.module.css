@@ -6,7 +6,7 @@
   border-radius: 0.7rem;
   width: 35rem;
   transition: all 0.3s;
-  color: var(--color-text);
+  color: inherit;
   background-color: #e6f8f8;
 }
 

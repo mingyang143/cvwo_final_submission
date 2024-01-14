@@ -7,7 +7,7 @@ import { usePosts } from "../Contexts/Hooks/postContextHook";
 import { useAuth } from "../Contexts/Hooks/authContextHook";
 import EditPost from "./EditPost";
 import { Post as PostType } from "../Models/PostModels";
-
+import styles from "./Post.module.css";
 type ChildrenProps = {
   postContent: PostType;
 };
@@ -44,19 +44,21 @@ export default function Post({ postContent }: ChildrenProps) {
           />
         ) : (
           <>
-            <label>{title}</label>
+            <label>
+              <h3>{title}</h3>
+            </label>
             {content.split(" ").length > 30 ? (
               <div>
                 <TextExpander
-                  expandButtonText={""}
                   collapsedNumWords={30}
-                  className="box"
+                  className={styles.box}
+                  buttonColor="#449090"
                 >
                   {content}
                 </TextExpander>
               </div>
             ) : (
-              <div className="box">
+              <div className={styles.box}>
                 <p>{content}</p>
               </div>
             )}
