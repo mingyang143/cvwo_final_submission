@@ -53,13 +53,6 @@ function reducer(state: State, action: Action): State {
       )
     );
   }
-  // function clearTagsUponDeletePost(id: number) {
-  //   const tagsToBeRemoved = state.posts.filter((post) => post.id === id)[0]
-  //     .tags;
-  //   return state.tagsAll.filter((tag) => {
-  //     return !tagsToBeRemoved.includes(tag);
-  //   });
-  // }
 
   switch (action.type) {
     case "posts/fetched":
