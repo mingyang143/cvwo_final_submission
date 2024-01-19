@@ -28,4 +28,5 @@ export type AuthContextType = State & {
   login: (userName: string) => Promise<void>;
   logout: () => void;
   createUser: (userName: string) => Promise<void>;
+  loadingToggle: () => void;
 };

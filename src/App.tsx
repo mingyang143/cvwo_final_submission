@@ -16,6 +16,7 @@ const PageNotFound = lazy(() => import("./Pages/PageNotFound"));
 const CreateUser = lazy(() => import("./Pages/CreateUser"));
 
 function App() {
+  //toggle dark mode
   const [isDark, setIsDark] = useState(false);
   useEffect(
     function () {

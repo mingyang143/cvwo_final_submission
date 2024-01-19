@@ -23,3 +23,11 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.link {
+  text-decoration: none;
+  color: #535a5a;
+}
+.link:hover {
+  color: #0b0d0d;
+}

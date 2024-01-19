@@ -42,7 +42,6 @@ function toFindDuplicates(arr: Array<string>) {
 }
 function reducer(state: State, action: Action): State {
   //compute all tags
-
   function getTagsAll(posts: Array<Post>) {
     return toFindDuplicates(
       posts.reduce(
@@ -51,6 +50,13 @@ function reducer(state: State, action: Action): State {
       )
     );
   }
+  // function clearTagsUponDeletePost(id: number) {
+  //   const tagsToBeRemoved = state.posts.filter((post) => post.id === id)[0]
+  //     .tags;
+  //   return state.tagsAll.filter((tag) => {
+  //     return !tagsToBeRemoved.includes(tag);
+  //   });
+  // }
 
   switch (action.type) {
     case "posts/fetched":
@@ -113,6 +119,9 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         posts: state.posts.filter((post) => post.id !== action.payload),
+        tagsAll: getTagsAll(
+          state.posts.filter((post) => post.id !== action.payload)
+        ),
       };
 
     default:
@@ -134,6 +143,7 @@ function PostProvider({ children }: ChildrenProps) {
     dispatch({ type: "posts/errorFetch", payload: message });
     console.log(message);
   };
+  //fetch post from backend on mount
   useEffect(function () {
     async function fetchDiscussions() {
       try {
@@ -191,7 +201,14 @@ function PostProvider({ children }: ChildrenProps) {
 
   const postCreate = useCallback(
     function postCreate(newPost: NewPost) {
-      dbPostCreate(newPost);
+      dbPostCreate({
+        userId: newPost.userId,
+        title: newPost.title,
+        content: newPost.content,
+        likes: newPost.likes,
+        comments: newPost.comments,
+        tags: newPost.tags,
+      });
     },
     [dbPostCreate]
   );

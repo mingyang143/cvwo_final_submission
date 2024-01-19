@@ -15,13 +15,16 @@ export default function Search({ query, setQuery }: ChildrenProps) {
   });
 
   return (
-    <input
-      className={styles.search}
-      type="text"
-      placeholder="Search for a post..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      ref={inputEl}
-    />
+    <>
+      <input
+        id="search"
+        className={styles.search}
+        type="text"
+        placeholder="Search for a post..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        ref={inputEl}
+      />
+    </>
   );
 }

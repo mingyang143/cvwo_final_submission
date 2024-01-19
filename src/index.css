@@ -111,24 +111,3 @@ button {
   background: none;
   border: 1px solid currentColor;
 }
-
-.position {
-  font-weight: 700;
-  position: absolute;
-  z-index: 1000;
-  font-size: 1.4rem;
-  bottom: 4rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #ffa94d;
-  color: #2d3439;
-  box-shadow: 0 0.4rem 1.2rem rgba(36, 42, 46, 0.16);
-}
-
-.link {
-  text-decoration: none;
-  color: #535a5a;
-}
-.link:hover {
-  color: #1f2727;
-}

@@ -63,7 +63,7 @@ export default function Login({
 
         {type === "login" && (
           <div>
-            <Link to="/create" className="link">
+            <Link to="/create" className={styles.link}>
               No account? Create one now!
             </Link>
           </div>

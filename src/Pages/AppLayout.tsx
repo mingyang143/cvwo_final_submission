@@ -6,12 +6,14 @@ import Spinner from "../Components/Spinner";
 import TagSelection from "../Components/TagSelection";
 import { useState } from "react";
 import Search from "../Components/Search";
+import { useAuth } from "../Contexts/Hooks/authContextHook";
 
 function AppLayout() {
   const { isPostFormOpen, dispatch, isLoading, tagsAll } = usePosts();
+  const { isLoginLoading } = useAuth();
   const [currTag, setCurrTag] = useState("All Posts");
   const [query, setQuery] = useState("");
-  if (isLoading) {
+  if (isLoading || isLoginLoading) {
     return <Spinner />;
   }
 

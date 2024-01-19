@@ -14,16 +14,17 @@ export default function FormMakePost() {
   const { user } = useAuth();
   const { tagsAll } = usePosts();
 
-  // const id = crypto.randomUUID();
+  //make Post
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!postTitle || !postContent || (!tag && !existingTag)) {
-      alert("Please fill in all 3 fields before submitting")
+      alert("Please fill in all 3 fields before submitting");
       return;
     }
-    
+    const TEMP_ID = crypto.randomUUID();
+
     const newPost: NewPost = {
-      // id: 1,
+      id: TEMP_ID,
       userId: user?.userId,
       title: postTitle,
       content: postContent,

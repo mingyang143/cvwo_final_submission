@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "./HomePages.module.css";
+import Spinner from "../Components/Spinner";
+import { useAuth } from "../Contexts/Hooks/authContextHook";
 function HomePage() {
+  const { isLoginLoading } = useAuth();
+  if (isLoginLoading) {
+    return <Spinner />;
+  }
   return (
     <div className={styles.homepage}>
       <section>

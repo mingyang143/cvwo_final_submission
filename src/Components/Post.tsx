@@ -18,14 +18,15 @@ export default function Post({ postContent }: ChildrenProps) {
   const { id, title, content, likes, comments, userId } = postContent;
 
   const [isEditing, setIsEditing] = useState(false);
-
+  //toggle comment view
   function handleSelection() {
     setCommentView((CommentView) => !CommentView);
   }
+  //+ 1 like for post
   function handleLikes(id: number) {
     postLike(id);
   }
-
+  //delete post
   function handleDelete(id: number) {
     postDelete(id);
   }

@@ -23,7 +23,7 @@ export type State = {
   isPostFormOpen: true | false;
   isLoading: true | false;
   error: string;
-  tagsAll: string[];
+  tagsAll: Array<string>;
 };
 
 export type Action =
@@ -64,6 +64,7 @@ export type PostToBeEdited = {
 };
 
 export type NewPost = {
+  id?: string;
   userId: number | undefined;
   title: string;
   content: string;

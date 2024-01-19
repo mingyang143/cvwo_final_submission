@@ -13,6 +13,7 @@ export default function FormMakeComment({
 }) {
   const TEMP_ID = window.crypto.randomUUID();
   const { postComment } = usePosts();
+  //Make NewComment
   function handleMakeComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!comment) {

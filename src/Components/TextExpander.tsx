@@ -30,6 +30,7 @@ export default function TextExpander({
     cursor: "pointer",
     marginLeft: "6px",
     color: buttonColor,
+    fontWeight: 700,
   };
   const [isExpanded, setExpand] = useState(expanded);
   return (

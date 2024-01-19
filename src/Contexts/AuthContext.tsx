@@ -66,6 +66,7 @@ const AuthContext = createContext<AuthContextType>({
   login: async () => {},
   logout: () => {},
   createUser: async () => {},
+  loadingToggle: () => {},
 });
 function AuthProvider({ children }: ChildrenProps) {
   const navigate = useNavigate();
@@ -101,8 +102,11 @@ function AuthProvider({ children }: ChildrenProps) {
 
   function logout() {
     dispatch({ type: "logout" });
+    dispatch({ type: "toggleLoading" });
   }
-
+  function loadingToggle() {
+    dispatch({ type: "toggleLoading" });
+  }
   async function dbIsValidUser(newUser: User) {
     try {
       const res = await fetch(`/checkuser?name=${newUser.name}`);
@@ -140,6 +144,7 @@ function AuthProvider({ children }: ChildrenProps) {
         logout,
         createUser,
         isLoginLoading,
+        loadingToggle,
       }}
     >
       {children}
