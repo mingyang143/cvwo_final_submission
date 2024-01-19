@@ -4,8 +4,13 @@ import { Post as PostType } from "../Models/PostModels";
 type ChildrenProps = {
   currTag: string;
   query: string;
+  onSetCurrTag: React.Dispatch<React.SetStateAction<string>>;
 };
-export default function PostList({ currTag, query }: ChildrenProps) {
+export default function PostList({
+  currTag,
+  query,
+  onSetCurrTag,
+}: ChildrenProps) {
   const { posts } = usePosts();
   //search bar filter
   function filterByTitleAndContent(posts: Array<PostType>): Array<PostType> {
@@ -18,7 +23,7 @@ export default function PostList({ currTag, query }: ChildrenProps) {
   //tag filter
   function filterByTags(posts: Array<PostType>): Array<PostType> {
     return posts?.filter((post) =>
-      post.tags.reduce((acc, curr) => currTag === curr || acc, false)
+      post.tags.reduce((acc, curr) => currTag === curr.tag || acc, false)
     );
   }
 
@@ -27,12 +32,26 @@ export default function PostList({ currTag, query }: ChildrenProps) {
       <ul>
         {query !== ""
           ? filterByTitleAndContent(posts).map((post) => (
-              <Post postContent={post} key={post.id} />
+              <Post
+                postContent={post}
+                key={post.id}
+                onSetCurrTag={onSetCurrTag}
+              />
             ))
           : currTag === "All Posts"
-          ? posts.map((post) => <Post postContent={post} key={post.id} />)
+          ? posts.map((post) => (
+              <Post
+                postContent={post}
+                key={post.id}
+                onSetCurrTag={onSetCurrTag}
+              />
+            ))
           : filterByTags(posts).map((post) => (
-              <Post postContent={post} key={post.id} />
+              <Post
+                postContent={post}
+                key={post.id}
+                onSetCurrTag={onSetCurrTag}
+              />
             ))}
       </ul>
     </div>

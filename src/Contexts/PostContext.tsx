@@ -15,6 +15,7 @@ import {
   NewPost,
   PostContextType,
   Post,
+  Tag,
 } from "../Models/PostModels";
 
 const initialState = {
@@ -35,17 +36,19 @@ const PostContext = createContext<PostContextType>({
   dispatch: () => {},
   postFormToggle: () => {},
 });
-function toFindDuplicates(arr: Array<string>) {
+function toFindDuplicates(arr: Array<Tag>) {
   return arr.filter(
-    (item: string, index: number) => arr.indexOf(item) === index
+    (item: Tag, index: number) =>
+      index ===
+      arr.findIndex((obj) => JSON.stringify(obj) === JSON.stringify(item))
   );
 }
 function reducer(state: State, action: Action): State {
-  //compute all tags
+  //compute all tags without duplicates
   function getTagsAll(posts: Array<Post>) {
     return toFindDuplicates(
       posts.reduce(
-        (acc: Array<string>, currPost) => acc.concat(currPost?.tags),
+        (acc: Array<Tag>, currPost) => acc.concat(currPost?.tags),
         []
       )
     );
@@ -207,7 +210,9 @@ function PostProvider({ children }: ChildrenProps) {
         content: newPost.content,
         likes: newPost.likes,
         comments: newPost.comments,
-        tags: newPost.tags,
+        tags: newPost.tags.map((tag) => {
+          return { tag: tag.tag };
+        }),
       });
     },
     [dbPostCreate]

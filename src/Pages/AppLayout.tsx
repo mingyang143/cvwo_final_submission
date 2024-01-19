@@ -24,7 +24,7 @@ function AppLayout() {
         {tagsAll.length !== 0 && (
           <TagSelection currTag={currTag} onSetCurrTag={setCurrTag} />
         )}
-        <PostList currTag={currTag} query={query} />
+        <PostList currTag={currTag} query={query} onSetCurrTag={setCurrTag} />
         {isPostFormOpen && <FormMakePost />}
         {!isPostFormOpen && (
           <Button

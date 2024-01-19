@@ -10,9 +10,10 @@ import { Post as PostType } from "../Models/PostModels";
 import styles from "./Post.module.css";
 type ChildrenProps = {
   postContent: PostType;
+  onSetCurrTag: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Post({ postContent }: ChildrenProps) {
+export default function Post({ postContent, onSetCurrTag }: ChildrenProps) {
   const { postLike, postDelete } = usePosts();
   const { user } = useAuth();
   const { id, title, content, likes, comments, userId } = postContent;
@@ -29,6 +30,7 @@ export default function Post({ postContent }: ChildrenProps) {
   //delete post
   function handleDelete(id: number) {
     postDelete(id);
+    onSetCurrTag("All Posts");
   }
 
   const [CommentView, setCommentView] = useState(false);

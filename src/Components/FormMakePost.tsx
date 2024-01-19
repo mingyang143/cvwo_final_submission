@@ -30,8 +30,25 @@ export default function FormMakePost() {
       content: postContent,
       likes: 0,
       comments: [],
-      tags: tag === "" ? [existingTag] : tag.split(","),
+      tags:
+        tag === ""
+          ? [{ tag: existingTag }]
+          : tag.split(",").map((tag) => {
+              return {
+                tag: tag.trim(),
+              };
+            }),
     };
+
+    // tags:
+    //     tag === ""
+    //       ? [{ id: crypto.randomUUID(), tag: existingTag }]
+    //       : tag.split(",").map((tag) => {
+    //           return {
+    //             id: crypto.randomUUID(),
+    //             tag,
+    //           };
+    //         }),
 
     postCreate(newPost);
   }
@@ -71,7 +88,7 @@ export default function FormMakePost() {
           >
             <option value=""></option>
             {tagsAll.map((tag) => (
-              <option>{tag}</option>
+              <option key={tag.id}>{tag.tag}</option>
             ))}
           </select>
         </>

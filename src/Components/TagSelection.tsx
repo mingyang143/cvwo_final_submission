@@ -13,7 +13,7 @@ export default function TagSelection({ currTag, onSetCurrTag }: ChildrenProps) {
       <select onChange={(e) => onSetCurrTag(e.target.value)} value={currTag}>
         <option>All Posts</option>
         {tagsAll.map((tag) => (
-          <option>{tag}</option>
+          <option key={tag.id}>{tag.tag}</option>
         ))}
       </select>
     </>

@@ -126,9 +126,8 @@ function AuthProvider({ children }: ChildrenProps) {
           "Content-Type": "application/json",
         },
       });
-      console.log(res);
+
       const data = await res.json();
-      console.log(data);
 
       return data;
     } catch {
