@@ -7,37 +7,6 @@ import {
   ChildrenProps,
   AuthContextType,
 } from "../Models/AuthModels";
-// interface User {
-//   userId?: number;
-//   name: string;
-//   pasword?: string;
-// }
-// interface State {
-//   user: User | null;
-//   isAuthenticated: true | false;
-//   isLoginLoading: true | false;
-// }
-// type Action =
-//   | {
-//       type: "login";
-//       payload: User;
-//     }
-//   | {
-//       type: "logout";
-//     }
-//   | {
-//       type: "toggleLoading";
-//     };
-
-// type ChildrenProps = {
-//   children: React.ReactNode;
-// };
-
-// type AuthContextType = State & {
-//   login: (userName: string) => Promise<void>;
-//   logout: () => void;
-//   createUser: (userName: string) => Promise<void>;
-// };
 
 const initialState = {
   user: null,
